@@ -10,18 +10,17 @@ class ServerlessDynamodbLocal {
         this.serverless = serverless;
         this.service = serverless.service;
         this.serverlessLog = serverless.cli.log.bind(serverless.cli);
-        this.config = this.service.custom && this.service.custom.dynamodb || {};
         this.options = options;
         this.provider = "aws";
         this.commands = {
             dynamodb: {
                 commands: {
                     migrate: {
-                        lifecycleEvents: ["migrateHandler"],
+                        lifecycleEvents: ['initialise', "migrateHandler"],
                         usage: "Creates local DynamoDB tables from the current Serverless configuration"
                     },
                     seed: {
-                        lifecycleEvents: ["seedHandler"],
+                        lifecycleEvents: ['initialise', "seedHandler"],
                         usage: "Seeds local DynamoDB tables with data",
                         options: {
                             online: {
@@ -31,7 +30,7 @@ class ServerlessDynamodbLocal {
                         }
                     },
                     start: {
-                        lifecycleEvents: ["startHandler"],
+                        lifecycleEvents: ['initialise',"startHandler"],
                         usage: "Starts local DynamoDB",
                         options: {
                             port: {
@@ -105,6 +104,10 @@ class ServerlessDynamodbLocal {
             "before:offline:start:init": this.startHandler.bind(this),
             "before:offline:start:end": this.endHandler.bind(this),
         };
+    }
+
+    get config() {
+        return this.service.custom && this.service.custom.dynamodb || {};
     }
 
     get port() {
