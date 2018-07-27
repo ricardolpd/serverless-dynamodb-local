@@ -16,11 +16,11 @@ class ServerlessDynamodbLocal {
             dynamodb: {
                 commands: {
                     migrate: {
-                        lifecycleEvents: ['initialise', "migrateHandler"],
+                        lifecycleEvents: ["migrateHandler"],
                         usage: "Creates local DynamoDB tables from the current Serverless configuration"
                     },
                     seed: {
-                        lifecycleEvents: ['initialise', "seedHandler"],
+                        lifecycleEvents: ["seedHandler"],
                         usage: "Seeds local DynamoDB tables with data",
                         options: {
                             online: {
@@ -30,7 +30,7 @@ class ServerlessDynamodbLocal {
                         }
                     },
                     start: {
-                        lifecycleEvents: ['initialise',"startHandler"],
+                        lifecycleEvents: ["startHandler"],
                         usage: "Starts local DynamoDB",
                         options: {
                             port: {
